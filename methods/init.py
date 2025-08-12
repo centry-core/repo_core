@@ -39,17 +39,6 @@ class Method:  # pylint: disable=E1101,R0902,R0903
         router.register_mode()
         #
         router.register_section(
-            key="user",
-            location="right",
-        )
-        router.register_subsection(
-            section="user",
-            key="logout",
-            kind="redirect",
-            url=self.descriptor.config.get("logout_url", f"{context.url_prefix}/auth/logout"),
-        )
-        #
-        router.register_section(
             key="core",
         )
         router.register_subsection(
@@ -71,6 +60,17 @@ class Method:  # pylint: disable=E1101,R0902,R0903
                 "content_template": f"{this.module_name}:settings/content.html",
                 "script_template": f"{this.module_name}:settings/scripts.html",
             },
+        )
+        #
+        router.register_section(
+            key="user",
+            location="right",
+        )
+        router.register_subsection(
+            section="user",
+            key="logout",
+            kind="redirect",
+            url=self.descriptor.config.get("logout_url", f"{context.url_prefix}/auth/logout"),
         )
         #
         # Runtime
