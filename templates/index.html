@@ -22,8 +22,8 @@
             <span class="navbar-toggler-icon"></span>
           </button>
           <div class="collapse navbar-collapse" id="navbarNavDropdown">
-            <ul class="navbar-nav nav-pills">
-              {%- for section in tools.context.router.visible_sections() %}
+            <ul class="navbar-nav nav-pills w-100">
+              {%- macro render_section(section, dropdown_class="dropdown-menu") %}
               {%- set subsections = tools.context.router.visible_subsections(section=section.key) %}
               {%- if subsections %}
               <li class="nav-item dropdown">
@@ -36,7 +36,7 @@
                   {{ section.title }}
                 </a>
                 {%- endif %}
-                <ul class="dropdown-menu">
+                <ul class="{{ dropdown_class }}">
                   {%- for subsection in subsections %}
                   {%- if subsection.key == g.router.subsection %}
                   <li><a class="dropdown-item active" href="{{ tools.context.router.make_url(section=section.key, subsection=subsection.key, page=None, slash=None) }}">{{ subsection.title }}</a></li>
@@ -55,6 +55,13 @@
                 {%- endif %}
               </li>
               {%- endif %}
+              {%- endmacro %}
+              {%- for section in tools.context.router.visible_sections() if section.kind_kwargs.location != 'right' %}
+              {{ render_section(section) }}
+              {%- endfor %}
+              <div class="mx-auto"></div>
+              {%- for section in tools.context.router.visible_sections() if section.kind_kwargs.location == "right" %}
+              {{ render_section(section, dropdown_class="dropdown-menu dropdown-menu-end") }}
               {%- endfor %}
             </ul>
           </div>
