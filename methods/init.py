@@ -140,6 +140,7 @@ class Method:  # pylint: disable=E1101,R0902,R0903
             "event_node": self.event_node,
             "labels": {
                 "pylon_runtime": f"id:{context.id}",
+                # pylon_runtime_group
             }
         })
         #
